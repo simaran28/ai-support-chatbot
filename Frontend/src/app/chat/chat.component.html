@@ -1,0 +1,76 @@
+<div class="chat-wrapper">
+
+  <!-- Top Bar -->
+  <div class="chat-topbar">
+    <div class="topbar-left">
+      <div class="status-dot"></div>
+      <div>
+        <div class="topbar-title">Customer Support</div>
+        <div class="topbar-sub">Session: {{ sessionId.slice(0, 8) }}...</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span class="msg-count">{{ messageCount }} messages</span>
+      <button class="clear-btn" (click)="clearChat()">🗑 Clear</button>
+    </div>
+  </div>
+
+  <!-- Messages -->
+  <div class="chat-messages">
+
+    <div *ngFor="let msg of messages"
+         class="msg-row"
+         [class.user-row]="msg.role === 'user'">
+
+      <!-- Avatar -->
+      <div class="msg-avatar" [class.bot-avatar]="msg.role === 'assistant'">
+        {{ msg.role === 'user' ? '👤' : '🤖' }}
+      </div>
+
+      <!-- Bubble -->
+      <div class="msg-bubble" [class.user-bubble]="msg.role === 'user'">
+        <p>{{ msg.content }}</p>
+
+        <!-- Sources -->
+        <div *ngIf="msg.sources && msg.sources.length > 0" class="sources">
+          <span *ngFor="let src of msg.sources" class="source-chip">
+            📄 {{ src }}
+          </span>
+        </div>
+
+        <div class="msg-time">{{ msg.timestamp | date:'shortTime' }}</div>
+      </div>
+
+    </div>
+
+    <!-- Typing Indicator -->
+    <div *ngIf="isLoading" class="msg-row">
+      <div class="msg-avatar bot-avatar">🤖</div>
+      <div class="msg-bubble typing-bubble">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+
+    <div #messagesEnd></div>
+  </div>
+
+  <!-- Input Area -->
+  <div class="chat-input-area">
+    <div class="input-box" [class.focused]="userInput.length > 0">
+      <textarea
+        [(ngModel)]="userInput"
+        (keydown)="onKeyDown($event)"
+        placeholder="Ask a question about your documents..."
+        rows="1"
+        [disabled]="isLoading"
+      ></textarea>
+      <button class="send-btn" (click)="sendMessage()" [disabled]="isLoading || !userInput.trim()">
+        ➤
+      </button>
+    </div>
+    <div class="input-hint">Press Enter to send • Shift+Enter for new line</div>
+  </div>
+
+</div>

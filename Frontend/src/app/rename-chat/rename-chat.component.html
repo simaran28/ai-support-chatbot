@@ -1,0 +1,12 @@
+<div class="backdrop" (click)="cancel.emit()"></div>
+<div class="modal" (click)="$event.stopPropagation()">
+  <div class="modal-header">Rename Chat</div>
+  <div class="modal-body">
+    <label for="chatTitle">New title</label>
+    <input id="chatTitle" type="text" [(ngModel)]="newTitle" />
+  </div>
+  <div class="modal-actions">
+    <button class="button secondary" type="button" (click)="cancel.emit()">Cancel</button>
+    <button class="button primary" type="button" (click)="save.emit({ sessionId: sessionId, title: newTitle.trim() })">Save</button>
+  </div>
+</div>

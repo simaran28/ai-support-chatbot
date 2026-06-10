@@ -1,0 +1,103 @@
+<div class="sidebar">
+
+  <!-- New Chat Button -->
+  <div class="new-chat-section">
+    <button class="new-chat-btn" (click)="onNewChat()">
+      <span class="plus-icon">＋</span>
+      New Chat
+    </button>
+  </div>
+
+  <!-- Saved Chats -->
+  <div class="sidebar-section chats-section">
+    <div class="section-header" (click)="toggleChatsSection()">
+      <div class="section-label-container">
+        <span class="collapse-arrow" [class.collapsed]="chatsCollapsed">▾</span>
+        <span class="section-label">Recent Chats</span>
+        <span class="section-badge">{{ savedChats.length }}</span>
+      </div>
+    </div>
+
+    <div class="section-content" *ngIf="!chatsCollapsed">
+      <div *ngIf="savedChats.length === 0" class="no-items">
+        No chats yet
+      </div>
+
+      <div class="chat-list-container">
+        <div
+          *ngFor="let chat of savedChats"
+          class="chat-item"
+          [class.active]="chat.session_id === activeSessionId"
+          (click)="onLoadChat(chat.session_id)"
+        >
+          <div class="chat-item-icon">💬</div>
+          <div class="chat-item-info">
+            <div class="chat-title">{{ chat.title }}</div>
+            <div class="chat-time">{{ chat.last_active }}</div>
+          </div>
+          <div class="chat-item-actions">
+            <button class="chat-actions-btn" (click)="openChatActions($event, chat.session_id)">⋮</button>
+            <div class="chat-actions-menu" *ngIf="activeMenuSessionId === chat.session_id">
+              <button class="chat-actions-item" (click)="openRenameModal($event, chat.session_id, chat.title)">Rename</button>
+              <button class="chat-actions-item delete" (click)="openDeleteModal($event, chat.session_id, chat.title)">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-rename-chat
+    *ngIf="renameModalOpen"
+    [sessionId]="renameModalSessionId"
+    [title]="renameModalTitle"
+    (save)="handleRenameSave($event)"
+    (cancel)="closeRenameModal()"
+  ></app-rename-chat>
+
+  <app-delete-chat
+    *ngIf="deleteModalOpen"
+    [sessionId]="deleteModalSessionId"
+    [title]="deleteModalTitle"
+    (confirm)="confirmDeleteChat($event)"
+    (cancel)="closeDeleteModal()"
+  ></app-delete-chat>
+
+  <!-- Documents -->
+  <div class="sidebar-section docs-section">
+    <div class="section-header" (click)="toggleDocsSection()">
+      <div class="section-label-container">
+        <span class="collapse-arrow" [class.collapsed]="docsCollapsed">▾</span>
+        <span class="section-label">Documents</span>
+        <span class="section-badge">{{ documents.length }}</span>
+      </div>
+    </div>
+
+    <div class="section-content" *ngIf="!docsCollapsed">
+      <div *ngIf="documents.length === 0" class="no-items">
+        No documents uploaded yet
+      </div>
+
+      <div class="docs-list-container">
+        <div *ngFor="let doc of documents" class="doc-item">
+          <span class="doc-icon">📄</span>
+          <span class="doc-name">{{ doc.filename }}</span>
+          <span class="doc-badge" >{{ doc.chunks }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upload -->
+  <div class="upload-section">
+    <div class="section-label">Upload Document</div>
+    <label class="upload-btn">
+      <input type="file" accept=".txt" (change)="onFileSelected($event)" hidden />
+      <span *ngIf="!uploading">📤 Choose .txt file</span>
+      <span *ngIf="uploading">⏳ Uploading...</span>
+    </label>
+    <div *ngIf="uploadSuccess" class="upload-success">{{ uploadSuccess }}</div>
+    <div *ngIf="uploadError" class="upload-error">{{ uploadError }}</div>
+  </div>
+
+</div>

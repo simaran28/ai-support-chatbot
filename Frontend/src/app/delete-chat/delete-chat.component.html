@@ -1,0 +1,12 @@
+<div class="backdrop" (click)="cancel.emit()"></div>
+<div class="modal" (click)="$event.stopPropagation()">
+  <div class="modal-header">Delete Chat</div>
+  <div class="modal-body">
+    <p>Are you sure you want to delete <strong>{{ title || 'this chat' }}</strong>?</p>
+    <p>This action cannot be undone.</p>
+  </div>
+  <div class="modal-actions">
+    <button class="button secondary" type="button" (click)="cancel.emit()">Cancel</button>
+    <button class="button delete" type="button" (click)="confirm.emit(sessionId)">Delete</button>
+  </div>
+</div>

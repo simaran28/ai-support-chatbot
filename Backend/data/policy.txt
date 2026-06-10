@@ -1,0 +1,20 @@
+Company Leave Policy
+
+Annual Leave:
+Every employee gets 20 paid leaves per year.
+Leaves can be carried forward to next year maximum 5 days.
+Leave must be applied 3 days in advance.
+
+Sick Leave:
+Every employee gets 10 sick leaves per year.
+Sick leave requires medical certificate if more than 2 days.
+
+Work From Home Policy:
+Employees can work from home 2 days per week.
+Work from home must be approved by manager.
+During work from home, employee must be available on calls.
+
+Salary Policy:
+Salary is credited on 1st of every month.
+Salary slip is sent via email every month.
+Increment is done every year in April month.

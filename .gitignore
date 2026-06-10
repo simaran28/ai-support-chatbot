@@ -1,0 +1,62 @@
+# Node/Angular
+Frontend/node_modules/
+Frontend/dist/
+Frontend/out-tsc/
+Frontend/.angular/
+Frontend/.angular-cache/
+Frontend/.vscode/
+Frontend/npm-debug.log*
+Frontend/yarn-debug.log*
+Frontend/yarn-error.log*
+Frontend/package-lock.json
+Frontend/.npm/
+
+# Python
+Backend/myvenv/
+Backend/__pycache__/
+Backend/*.py[cod]
+Backend/*.pyo
+Backend/*.pyd
+Backend/.Python
+Backend/env/
+Backend/venv/
+Backend/ENV/
+Backend/env.bak/
+Backend/venv.bak/
+
+# Environment / secrets
+*.env
+*.env.*
+Backend/.env
+Frontend/.env
+
+# IDE / Editor
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Build / generated
+*.log
+*.sqlite3
+*.db
+*.bak
+*.tmp
+*.temp
+*.cache
+*.swp
+
+# Chroma vector store / embeddings data
+Backend/vectorstore/
+
+# Python packaging
+Backend/dist/
+Backend/build/
+Backend/*.egg-info/
+
+# Others
+tmp/
+temp/
+
+# Optional: ignore local uploads if you don't want them in Git
+# Backend/data/uploads/

@@ -1,0 +1,65 @@
+Angular Development Guide
+
+Introduction
+
+Angular is a TypeScript-based frontend framework developed by Google. It is used to build scalable and maintainable web applications.
+
+Components
+
+Components are the building blocks of Angular applications. Every component consists of:
+
+* TypeScript class
+* HTML template
+* CSS stylesheet
+
+Modules
+
+Angular applications are organized using modules. The root module is typically called AppModule.
+
+Services
+
+Services are used to share logic and data across components. Services are commonly injected using Angular's Dependency Injection system.
+
+Routing
+
+Angular Router allows navigation between pages without reloading the browser. Routes are configured inside the routing module.
+
+Forms
+
+Angular supports:
+
+1. Template-driven forms
+2. Reactive forms
+
+Reactive forms provide better scalability and validation control.
+
+HTTP Client
+
+Angular HttpClient is used for making API calls to backend services.
+
+Example methods:
+
+* GET
+* POST
+* PUT
+* DELETE
+
+Lifecycle Hooks
+
+Common lifecycle hooks include:
+
+* ngOnInit
+* ngOnChanges
+* ngOnDestroy
+
+Best Practices
+
+* Use lazy loading
+* Keep components small
+* Use interfaces for models
+* Avoid business logic in templates
+* Use OnPush change detection where appropriate
+
+Conclusion
+
+Angular is well suited for enterprise-grade applications requiring structure and maintainability.

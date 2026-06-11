@@ -6,7 +6,7 @@ import { Observable, Subject } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class ChatService {
 
-  private api = 'http://localhost:8000';
+  private api = 'https://ai-support-chatbot-backend-w2m6.onrender.com';
   private refreshSubject = new Subject<void>();
   refresh$ = this.refreshSubject.asObservable();
 

@@ -1,8 +1,8 @@
 # ai-support-chatbot
 AI-powered customer support chatbot built with Angular 18, FastAPI, and  LangChain. Features RAG pipeline to answer questions from uploaded documents,  persistent chat history with MySQL, and session management.
 ## 🌐 Live Demo
-> Frontend: [your-vercel-link]
-> Backend:  [your-render-link]
+> Frontend: https://ai-support-chatbot-tau.vercel.app
+> Backend:  https://ai-support-chatbot-backend-w2m6.onrender.com/
 
 ---
 

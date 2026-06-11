@@ -6,7 +6,6 @@ langchain-core
 langchain-text-splitters
 langchain-groq
 chromadb
-sentence-transformers
 python-multipart
 python-dotenv
 sqlalchemy

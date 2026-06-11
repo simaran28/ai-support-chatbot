@@ -4,18 +4,19 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.output_parsers import StrOutputParser
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_groq import ChatGroq
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.embeddings import FakeEmbeddings
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
 
 # embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
-embeddings = HuggingFaceEmbeddings(
-    model_name="all-MiniLM-L6-v2",
-    model_kwargs={"device": "cpu"},
-    encode_kwargs={"normalize_embeddings": False}
-)
+# embeddings = HuggingFaceEmbeddings(
+#     model_name="all-MiniLM-L6-v2",
+#     model_kwargs={"device": "cpu"},
+#     encode_kwargs={"normalize_embeddings": False}
+# )
+embeddings = FakeEmbeddings(size=384)
 
 llm = ChatGroq(
     api_key=os.getenv("GROQ_API_KEY"),

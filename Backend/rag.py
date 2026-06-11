@@ -1,25 +1,29 @@
-# rag.py
 from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.document_loaders import TextLoader
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.output_parsers import StrOutputParser
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_groq import ChatGroq          # ← changed
+from langchain_groq import ChatGroq
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
 
-embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+# embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+embeddings = HuggingFaceEmbeddings(
+    model_name="all-MiniLM-L6-v2",
+    model_kwargs={"device": "cpu"},
+    encode_kwargs={"normalize_embeddings": False}
+)
 
 llm = ChatGroq(
     api_key=os.getenv("GROQ_API_KEY"),
-    model=os.getenv("GROQ_MODEL", "llama3-8b-8192"),
+    model=os.getenv("GROQ_MODEL", "llama-3.1-8b-instant"),
     temperature=0.2,
 )
 
-VECTORSTORE_PATH = "./vectorstore"
+VECTORSTORE_PATH = "/tmp/vectorstore"
 
 def ingest_document(file_path: str):
     loader = TextLoader(file_path)

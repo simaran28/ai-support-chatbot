@@ -37,7 +37,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-DATA_DIR = "./data"
+DATA_DIR = "/tmp/data"
 os.makedirs(DATA_DIR, exist_ok=True)
 
 class ChatRequest(BaseModel):

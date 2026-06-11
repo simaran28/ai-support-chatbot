@@ -31,7 +31,8 @@ app = FastAPI(title="AI Support Chatbot")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200"],
+    allow_origins=["http://localhost:4200",
+        "https://ai-support-chatbot-tau.vercel.app" ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

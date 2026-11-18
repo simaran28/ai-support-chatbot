@@ -23,7 +23,12 @@ DB_USER_ENCODED = quote_plus(DB_USER)
 DB_PASSWORD_ENCODED = quote_plus(DB_PASSWORD)
 DB_URL = f"mysql+pymysql://{DB_USER_ENCODED}:{DB_PASSWORD_ENCODED}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
-engine = create_engine(DB_URL)
+engine = create_engine(
+    DB_URL,
+    pool_pre_ping=True,
+    pool_recycle=280,
+    pool_timeout=30,
+)
 SessionLocal = sessionmaker(bind=engine)
 Base = declarative_base()
 

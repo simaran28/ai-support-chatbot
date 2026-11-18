@@ -15,18 +15,22 @@ from rag import ingest_document, chat_with_rag
 import shutil, os
 
 # Create all tables on startup
-Base.metadata.create_all(bind=engine)
+try:
+    Base.metadata.create_all(bind=engine)
 
-# Ensure the sessions.title column exists on the live database
-inspector = inspect(engine)
-if 'sessions' in inspector.get_table_names():
-        session_columns = [col['name'] for col in inspector.get_columns('sessions')]
-        if 'title' not in session_columns:
-            with engine.connect() as conn:
-                conn.exec_driver_sql("ALTER TABLE sessions ADD COLUMN title VARCHAR(100) NULL DEFAULT NULL")
-        else:
-            with engine.connect() as conn:
-                conn.exec_driver_sql("ALTER TABLE sessions MODIFY COLUMN title VARCHAR(100) NULL DEFAULT NULL")
+    # Ensure the sessions.title column exists on the live database
+    inspector = inspect(engine)
+    if 'sessions' in inspector.get_table_names():
+            session_columns = [col['name'] for col in inspector.get_columns('sessions')]
+            if 'title' not in session_columns:
+                with engine.connect() as conn:
+                    conn.exec_driver_sql("ALTER TABLE sessions ADD COLUMN title VARCHAR(100) NULL DEFAULT NULL")
+            else:
+                with engine.begin() as conn:
+                    conn.exec_driver_sql("ALTER TABLE sessions MODIFY COLUMN title VARCHAR(100) NULL DEFAULT NULL")
+except Exception as exc:
+    print(f"Database startup check failed: {exc}")
+
 app = FastAPI(title="AI Support Chatbot")
 
 app.add_middleware(

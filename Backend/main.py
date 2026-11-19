@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException, UploadFile, File, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional
-from sqlalchemy import inspect
+from sqlalchemy import inspect, text
 from sqlalchemy.orm import Session as DBSession
 from uuid import uuid4
 from database import engine, get_db, Base
@@ -65,7 +65,12 @@ class SessionUpdateRequest(BaseModel):
 
 @app.get("/health")
 def health():
-    return {"status": "running"}
+    try:
+        with engine.connect() as connection:
+            connection.execute(text("SELECT 1"))
+        return {"status": "running", "database": "connected"}
+    except Exception as exc:
+        raise HTTPException(status_code=503, detail=f"Database unavailable: {exc}")
 
 @app.post("/upload")
 async def upload(file: UploadFile = File(...), db: DBSession = Depends(get_db)):

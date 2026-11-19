@@ -26,8 +26,13 @@ DB_URL = f"mysql+pymysql://{DB_USER_ENCODED}:{DB_PASSWORD_ENCODED}@{DB_HOST}:{DB
 engine = create_engine(
     DB_URL,
     pool_pre_ping=True,
-    pool_recycle=280,
+    pool_recycle=180,
     pool_timeout=30,
+    connect_args={
+        "connect_timeout": 10,
+        "read_timeout": 60,
+        "write_timeout": 60,
+    },
 )
 SessionLocal = sessionmaker(bind=engine)
 Base = declarative_base()

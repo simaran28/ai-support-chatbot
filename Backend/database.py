@@ -8,20 +8,26 @@ import os
 
 load_dotenv()
 
-DB_HOST     = os.getenv("DB_HOST", "localhost")
-DB_PORT     = int(os.getenv("DB_PORT") or "3306")   # ← handles None safely
-DB_USER     = os.getenv("DB_USER", "root")
-DB_PASSWORD = os.getenv("DB_PASSWORD", "")
-DB_NAME     = os.getenv("DB_NAME", "railway")
+DATABASE_URL = (
+    os.getenv("MYSQL_PUBLIC_URL")
+    or os.getenv("MYSQL_URL")
+    or os.getenv("DATABASE_URL")
+)
 
-# DB_URL = (
-#     f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}"
-#     f"@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-# )
+if DATABASE_URL:
+    DB_URL = DATABASE_URL
+    if DB_URL.startswith("mysql://"):
+        DB_URL = DB_URL.replace("mysql://", "mysql+pymysql://", 1)
+else:
+    DB_HOST     = os.getenv("DB_HOST", "localhost")
+    DB_PORT     = int(os.getenv("DB_PORT") or "3306")   # ← handles None safely
+    DB_USER     = os.getenv("DB_USER", "root")
+    DB_PASSWORD = os.getenv("DB_PASSWORD", "")
+    DB_NAME     = os.getenv("DB_NAME", "railway")
 
-DB_USER_ENCODED = quote_plus(DB_USER)
-DB_PASSWORD_ENCODED = quote_plus(DB_PASSWORD)
-DB_URL = f"mysql+pymysql://{DB_USER_ENCODED}:{DB_PASSWORD_ENCODED}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    DB_USER_ENCODED = quote_plus(DB_USER)
+    DB_PASSWORD_ENCODED = quote_plus(DB_PASSWORD)
+    DB_URL = f"mysql+pymysql://{DB_USER_ENCODED}:{DB_PASSWORD_ENCODED}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 engine = create_engine(
     DB_URL,
